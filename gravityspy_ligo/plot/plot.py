@@ -69,9 +69,15 @@ def plot_qtransform(spectrogram, plot_normalized_energy_range, plot_time_ranges,
     my_color = 'k'
 
     if detector_name == 'H1':
-        title = "Hanford"
+        if 'GDS-CALIB_STRAIN' in title:
+            title = "HANFORD - MAIN GW CHANNEL"
+        else:
+            title = title[3:]
     elif detector_name == 'L1':
-        title = "Livingston"
+        if 'GDS-CALIB_STRAIN' in title:
+            title = "LIVINGSTON - MAIN GW CHANNEL"
+        else:
+            title = title[3:]
     elif detector_name == 'V1':
         title = "VIRGO"
     elif detector_name == 'G1':
@@ -101,7 +107,8 @@ def plot_qtransform(spectrogram, plot_normalized_energy_range, plot_time_ranges,
     elif 1235750418 < start_time < 1238112018:
         title = title + ' - ER14'
     elif 1238112018 < start_time < 1362960018:
-        title = title + ' - O3'
+        if 'MAIN GW CHANNEL' in title:
+            title = title + ' - O3'
     elif 1362960018 < start_time < 1368921618:
         title = title + ' - ER15'
     elif 1368921618 < start_time:

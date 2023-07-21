@@ -122,7 +122,8 @@ def make_q_scans(event_time, **kwargs):
             logger.info('Fetching Data...')
         data = TimeSeries.get(channel_name, start_time, stop_time,
                               frametype=frametype, verbose=verbose).astype('float64')
-
+    nyquist_frequency = data.sample_rate / 2
+    
     # resample data
     if verbose:
         logger.info('Resampling Data...')
@@ -145,6 +146,10 @@ def make_q_scans(event_time, **kwargs):
                               gps=center_time, search=0.5,
                               tres=0.002,
                               fres=0.5, outseg=outseg, whiten=True)
+
+    # Zero out the values above the Nyquist frequency
+    frequency_mask = q_scan.frequencies > nyquist_frequency # masking frequencies above the Nyquist frequency
+    q_scan.value[:, frequency_mask] = 0.0 # zeroing out the values above the Nyquist frequency
 
     q_value = q_scan.q
     
