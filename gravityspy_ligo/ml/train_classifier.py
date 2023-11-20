@@ -2,7 +2,7 @@ from .GS_utils import build_cnn, concatenate_views
 from keras import backend as K
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.utils import np_utils
+from keras.utils import to_categorical
 from keras.callbacks import ModelCheckpoint
 from ..utils import log
 from gwpy.table import EventTable
